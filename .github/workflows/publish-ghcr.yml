@@ -21,7 +21,9 @@ jobs:
           distribution: temurin
           java-version: "25"
 
-      - name: Build and publish with Jib
-        run: ./gradlew jib
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Show Gradle tasks (so we can pick the right publish task)
+        run: ./gradlew tasks --all
+
+      - name: Build (sanity)
+        run: ./gradlew build
+
