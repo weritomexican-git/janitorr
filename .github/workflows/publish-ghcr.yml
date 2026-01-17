@@ -1,0 +1,27 @@
+name: Publish Janitorr Docker image
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Build and publish with Jib
+        run: ./gradlew jib
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
